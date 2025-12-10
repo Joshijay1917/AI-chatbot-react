@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Mouth, { type MouthRef } from './Mouth'
 import { useSpeechSynthesis, useSpeechRecognition } from 'react-speech-kit'
 import "./Face.css"

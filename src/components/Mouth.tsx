@@ -7,7 +7,7 @@ export interface MouthRef {
   speak: (text: string) => void;
 }
 
-const Mouth = forwardRef<MouthRef, {}>((props, ref) => {
+const Mouth = forwardRef<MouthRef, {}>(({}, ref) => {
   // 1. Replace useSharedValue with useMotionValue
   const mouthWidth = useMotionValue(70); 
   const mouthHeight = useMotionValue(10); 
