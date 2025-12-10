@@ -1,0 +1,33 @@
+@import "tailwindcss";
+
+.eye {
+    height: 0;
+    
+    /* Total duration: 4s 
+       No 'alternate' needed because keyframes handle the return to 0.
+       No 'delay' needed here (unless you want a start delay).
+    */
+    animation: eye-blink 6s ease-in-out infinite;
+}
+
+@keyframes eye-blink {
+    /* 1. Start Closed */
+    0% {
+        height: 0;
+    }
+
+    /* 2. Open (Takes 1s / 25%) */
+    25% {
+        height: 150px;
+    }
+
+    /* 3. Wait/Hold (Takes 2s / 50%) */
+    75% {
+        height: 150px; /* Stay same height as previous step */
+    }
+
+    /* 4. Close (Takes 1s / 25%) */
+    100% {
+        height: 0;
+    }
+}
