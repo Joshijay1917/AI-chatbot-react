@@ -1,13 +1,16 @@
 import { useEffect, useRef, useState } from 'react'
 import Mouth, { type MouthRef } from './Mouth'
 import { useSpeechSynthesis, useSpeechRecognition } from 'react-speech-kit'
+import { useChat } from '../hooks/useChat'
 import "./Face.css"
 
 const Face = () => {
     const mouthRef = useRef<MouthRef>(null);
-    const speakText = "Hello human I am VirtuAI? How Can i help you?"
+    // const speakText = "Hello human I am VirtuAI? How Can i help you?"
+    const silenceTimer = useRef<any>(null);
     const [eyeAnim, seteyeAnim] = useState('')
     const [query, setquery] = useState('')
+    const { askAI } = useChat()
     const { speak, voices } = useSpeechSynthesis({
         onEnd: () => {
             // This code runs ONLY when the AI finishes speaking
@@ -18,20 +21,29 @@ const Face = () => {
     const { listen, listening, stop } = useSpeechRecognition({
         onResult: (result) => {
             setquery(prev => prev + " " + result);
+            if (silenceTimer.current) clearTimeout(silenceTimer.current);
+            silenceTimer.current = setTimeout(() => {
+                // 3. SILENCE DETECTED: User stopped talking for 2 seconds
+                speakNow(query);
+            }, 2000);
         },
     });
 
-    const speakNow = async () => {
+    const speakNow = async (userText: string) => {
         stop()
-        mouthRef.current?.speak(speakText);
+        // const userText = "Hello AI";
+        const aiReply = await askAI(userText);
+        console.log("AIREPLAY:", aiReply);
+        mouthRef.current?.speak(aiReply);
         speak({ 
-            text: speakText,
+            text: aiReply,
             voice: voices[2]
         });
         console.log(listening);
     }
 
     useEffect(() => {
+        speakNow("Hello AI");
         let mainTimer: any;
         let openTimer: any;
 
@@ -74,8 +86,8 @@ const Face = () => {
 
                 <Mouth ref={mouthRef} />
 
-                <button onClick={speakNow}>Speak</button>
-                <p>{query}</p>
+                {/* <button onClick={speakNow}>Speak</button> */}
+                {/* <p>{query}</p> */}
             </div>
         </div>
     )
