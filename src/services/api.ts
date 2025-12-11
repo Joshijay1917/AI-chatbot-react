@@ -7,6 +7,7 @@ export interface ChatResponse {
 const API_URL = import.meta.env.VITE_API_URL;
 
 export const sendToBackend = async (message: string): Promise<string> => {
+    
     try {
         const response = await fetch(`${API_URL}/ai/chat`, {
             method: 'POST',

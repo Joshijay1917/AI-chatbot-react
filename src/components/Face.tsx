@@ -33,7 +33,8 @@ const Face = () => {
         stop()
         // const userText = "Hello AI";
         const aiReply = await askAI(userText);
-        console.log("AIREPLAY:", aiReply);
+        // const aiReply = "Hello how can i help you?";
+        console.log("AIREPLAY:", voices);
         mouthRef.current?.speak(aiReply);
         speak({ 
             text: aiReply,
@@ -43,7 +44,6 @@ const Face = () => {
     }
 
     useEffect(() => {
-        speakNow("Hello AI");
         let mainTimer: any;
         let openTimer: any;
 
@@ -86,7 +86,7 @@ const Face = () => {
 
                 <Mouth ref={mouthRef} />
 
-                {/* <button onClick={speakNow}>Speak</button> */}
+                {!listening && <button onClick={()=>speakNow("Hello AI")}>Click here to start</button>}
                 {/* <p>{query}</p> */}
             </div>
         </div>

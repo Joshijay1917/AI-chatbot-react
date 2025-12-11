@@ -8,6 +8,7 @@ export const useChat = () => {
     const askAI = async (message: string) => {
         setLoading(true);
         setError(null);
+        console.log("Message:", message);
         try {
             const reply = await sendToBackend(message);
             setLoading(false);
