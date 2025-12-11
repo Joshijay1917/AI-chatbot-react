@@ -15,6 +15,7 @@ const Face = () => {
         onEnd: () => {
             // This code runs ONLY when the AI finishes speaking
             console.log("AI finished speaking. Now listening...");
+            setquery('')
             listen({ lang: 'en-US', interimResults: true });
         }
     });
@@ -41,7 +42,6 @@ const Face = () => {
             voice: voices[2]
         });
         console.log(listening);
-        setquery('')
     }
 
     useEffect(() => {
