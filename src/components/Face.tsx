@@ -10,7 +10,7 @@ const Face = () => {
     const silenceTimer = useRef<any>(null);
     const [eyeAnim, seteyeAnim] = useState('')
     const [query, setquery] = useState('')
-    const { askAI } = useChat()
+    const { askAI, loading } = useChat()
     const { speak, voices } = useSpeechSynthesis({
         onEnd: () => {
             // This code runs ONLY when the AI finishes speaking
@@ -41,6 +41,7 @@ const Face = () => {
             voice: voices[2]
         });
         console.log(listening);
+        setquery('')
     }
 
     useEffect(() => {
@@ -87,7 +88,8 @@ const Face = () => {
                 <Mouth ref={mouthRef} />
 
                 {!listening && <button onClick={()=>speakNow("Hello AI")}>Click here to start</button>}
-                {/* <p>{query}</p> */}
+                {loading && <p>Loading..</p>}
+                {query && <p>{query}</p>}
             </div>
         </div>
     )
